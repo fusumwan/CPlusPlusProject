@@ -1,0 +1,100 @@
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 1.870574,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 0 to layer 3
+          START TIMER: starting timer at 1.870574
+
+EVENT time: 3.512484,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 1 to layer 3
+
+EVENT time: 4.926962,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 2 to layer 3
+
+EVENT time: 5.182523,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 3 to layer 3
+
+EVENT time: 5.953027,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 4 to layer 3
+
+EVENT time: 6.811561,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 5 to layer 3
+
+EVENT time: 7.335669,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+
+EVENT time: 8.247765,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is full
+
+EVENT time: 8.551395,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is full
+
+EVENT time: 9.087596,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is full
+
+EVENT time: 9.517292,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+
+EVENT time: 10.104663,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is full
+
+EVENT time: 11.271111,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 14.438572,  type: 2, fromlayer3  entity: 1
+----B: packet 2 is correctly received, send ACK!
+
+EVENT time: 14.990212,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 0 is received
+----A: ACK 0 is not a duplicate
+          STOP TIMER: stopping timer at 14.990212
+          START TIMER: starting timer at 14.990212
+
+EVENT time: 16.791710,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 1 is received
+----A: ACK 1 is not a duplicate
+          STOP TIMER: stopping timer at 16.791710
+          START TIMER: starting timer at 16.791710
+
+EVENT time: 19.409052,  type: 2, fromlayer3  entity: 1
+----B: packet 3 is correctly received, send ACK!
+
+EVENT time: 23.993544,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 2 is received
+----A: ACK 2 is not a duplicate
+          STOP TIMER: stopping timer at 23.993544
+          START TIMER: starting timer at 23.993544
+
+EVENT time: 24.681282,  type: 2, fromlayer3  entity: 1
+----B: packet 4 is correctly received, send ACK!
+
+EVENT time: 29.831514,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 3 is received
+----A: ACK 3 is not a duplicate
+          STOP TIMER: stopping timer at 29.831514
+          START TIMER: starting timer at 29.831514
+
+EVENT time: 30.710932,  type: 2, fromlayer3  entity: 1
+----B: packet 5 is correctly received, send ACK!
+
+EVENT time: 39.590763,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 4 is received
+----A: ACK 4 is not a duplicate
+          STOP TIMER: stopping timer at 39.590763
+          START TIMER: starting timer at 39.590763
+
+EVENT time: 40.649227,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 5 is received
+----A: ACK 5 is not a duplicate
+          STOP TIMER: stopping timer at 40.649227
+ Simulator terminated at time 40.649227
+ after attempting to send 10 msgs from layer5
+number of messages dropped due to full window:  4 
+number of valid (not corrupt or duplicate) acknowledgements received at A:  6 
+(note: a single acknowledgement may have acknowledged more than one packet - if cumulative acknowledgements are used)
+number of packet resends by A:  0 
+number of correct packets received at B:  6 
+number of messages delivered to application:  6 

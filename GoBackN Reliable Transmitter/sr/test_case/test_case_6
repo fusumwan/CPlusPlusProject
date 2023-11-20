@@ -1,0 +1,66 @@
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:If you want loss or corruption to only occur in one direction, choose the direction: 0 A->B, 1 A<-B, 2 A<->B (both directions) :Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 1.870574,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 0 to layer 3
+          START TIMER: starting timer at 1.870574
+
+EVENT time: 3.512484,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 1 to layer 3
+
+EVENT time: 4.926962,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 2 to layer 3
+          TOLAYER3: packet being lost
+
+EVENT time: 5.182523,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 3 to layer 3
+
+EVENT time: 6.053919,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 7.335669,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+
+EVENT time: 8.814089,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 0 is received
+----A: ACK 0 is not a duplicate
+          STOP TIMER: stopping timer at 8.814089
+          START TIMER: starting timer at 8.814089
+
+EVENT time: 9.517292,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+
+EVENT time: 13.984557,  type: 2, fromlayer3  entity: 1
+----B: packet 3 is correctly received, send ACK!
+
+EVENT time: 14.789521,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 1 is received
+----A: ACK 1 is not a duplicate
+          STOP TIMER: stopping timer at 14.789521
+          START TIMER: starting timer at 14.789521
+
+EVENT time: 18.992163,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 3 is received
+----A: ACK 3 is not a duplicate
+
+EVENT time: 29.789520,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 2
+          START TIMER: starting timer at 29.789520
+
+EVENT time: 32.519760,  type: 2, fromlayer3  entity: 1
+----B: packet 2 is correctly received, send ACK!
+
+EVENT time: 34.886101,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 2 is received
+----A: ACK 2 is not a duplicate
+          STOP TIMER: stopping timer at 34.886101
+ Simulator terminated at time 34.886101
+ after attempting to send 4 msgs from layer5
+number of messages dropped due to full window:  0 
+number of valid (not corrupt or duplicate) acknowledgements received at A:  4 
+(note: a single acknowledgement may have acknowledged more than one packet - if cumulative acknowledgements are used)
+number of packet resends by A:  1 
+number of correct packets received at B:  4 
+number of messages delivered to application:  4 

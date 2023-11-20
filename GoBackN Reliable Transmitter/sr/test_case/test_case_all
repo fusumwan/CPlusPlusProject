@@ -1,0 +1,2017 @@
+Output at: Apr 25 03:05.54
+$ websubmit-automark -g 4 -n a1714470 -x a1714470 -a 2019/s1/cna/sr@985 -r 985 -f /users/assessment/websubmit/2019/s1/cna/sr/Web-Submission/a1714470/revision-985 -d 190425-030554 -u https://version-control.adelaide.edu.au/svn/ 2019/s1/cna/sr
+****************************************************************************************************************** 
+Web Submission Script for Assignment Key: 2019/s1/cna/sr  User: a1714470 SVN Exported revision 985.
+******************************************************************************************************************
+Submitted Files:
+
+.:
+total 36
+-rw-rw---- 1 legend teaching 17307 Apr 25 03:05 emulator.c
+-rw-rw---- 1 legend teaching  1293 Apr 25 03:05 emulator.h
+-rw-rw---- 1 legend teaching  5875 Apr 25 03:05 sr.c
+-rw-rw---- 1 legend teaching   377 Apr 25 03:05 sr.h
+****************************************************************************************************************** 
+Output From Web Submission Script:
+running test script....
+compiling programs....
+compilation successful....
+running tests....
+
+# ############ TEST 1 ##################
+running first test, basic functionality.....
+comparing output....
+3c3
+< number of valid (not corrupt or duplicate) acknowledgements received at A:  1 
+---
+> number of valid (not corrupt or duplicate) acknowledgements received at A:  0 
+6c6
+< number of correct packets received at B:  1 
+---
+> number of correct packets received at B:  0 
+
+Failed basic send test
+see differences in behaviour below
+
+expected behaviour for test
+-----  Stop and Wait Network Simulator Version 1.1 -------- 
+
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 1.870574,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 0 to layer 3
+          START TIMER: starting timer at 1.870574
+
+EVENT time: 3.512484,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 7.335669,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+
+EVENT time: 12.567283,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 0 is received
+----A: ACK 0 is not a duplicate
+          STOP TIMER: stopping timer at 12.567283
+ Simulator terminated at time 12.567283
+ after attempting to send 1 msgs from layer5
+number of messages dropped due to full window:  0 
+number of valid (not corrupt or duplicate) acknowledgements received at A:  1 
+(note: a single acknowledgement may have acknowledged more than one packet - if cumulative acknowledgements are used)
+number of packet resends by A:  0 
+number of correct packets received at B:  1 
+number of messages delivered to application:  1 
+----------------------------
+your behaviour for test
+-----  Stop and Wait Network Simulator Version 1.1 -------- 
+
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 1.870574,  type: 1, fromlayer5  entity: 0
+          START TIMER: starting timer at 1.870574
+Sending packet 0 to layer 3
+
+EVENT time: 3.512484,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 7.335669,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+
+EVENT time: 12.567283,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 12.567283
+ Simulator terminated at time 12.567283
+ after attempting to send 1 msgs from layer5
+number of messages dropped due to full window:  0 
+number of valid (not corrupt or duplicate) acknowledgements received at A:  0 
+(note: a single acknowledgement may have acknowledged more than one packet - if cumulative acknowledgements are used)
+number of packet resends by A:  0 
+number of correct packets received at B:  0 
+number of messages delivered to application:  1 
+
+----------------------------
+differences
+sr.c: In function ‘A_output’:
+sr.c:78:5: warning: implicit declaration of function ‘memcpy’ [-Wimplicit-function-declaration]
+     memcpy(waiting_packet.payload, message.data, sizeof(message.data));
+     ^
+sr.c:78:5: warning: incompatible implicit declaration of built-in function ‘memcpy’ [enabled by default]
+sr.c: In function ‘B_input’:
+sr.c:145:9: warning: ISO C90 forbids mixed declarations and code [-Wpedantic]
+         struct msg message;
+         ^
+sr.c:146:9: warning: incompatible implicit declaration of built-in function ‘memcpy’ [enabled by default]
+         memcpy(message.data, packet.payload, sizeof(packet.payload));
+         ^
+sr.c:155:5: warning: ISO C90 forbids mixed declarations and code [-Wpedantic]
+     struct pkt ackpkt;
+     ^
+sr.c: At top level:
+sr.c:63:19: warning: ‘buffer’ defined but not used [-Wunused-variable]
+ static struct pkt buffer[WINDOWSIZE];  /* array for storing packets waiting for ACK */
+                   ^
+sr.c:64:12: warning: ‘windowfirst’ defined but not used [-Wunused-variable]
+ static int windowfirst, windowlast;    /* array indexes of the first/last packet awaiting ACK */
+            ^
+sr.c:64:25: warning: ‘windowlast’ defined but not used [-Wunused-variable]
+ static int windowfirst, windowlast;    /* array indexes of the first/last packet awaiting ACK */
+                         ^
+sr.c:65:12: warning: ‘windowcount’ defined but not used [-Wunused-variable]
+ static int windowcount;                /* the number of packets currently awaiting an ACK */
+            ^
+sr.c:129:12: warning: ‘B_nextseqnum’ defined but not used [-Wunused-variable]
+ static int B_nextseqnum;   /* the sequence number for the next packets sent by B */
+            ^
+Further testing is not possible until these errors are
+corrected.
+
+# ############ TEST 2 ##################
+running second test, basic functionality with full window.....
+comparing output....
+2,3c2,3
+< number of messages dropped due to full window:  4 
+< number of valid (not corrupt or duplicate) acknowledgements received at A:  6 
+---
+> number of messages dropped due to full window:  0 
+> number of valid (not corrupt or duplicate) acknowledgements received at A:  0 
+6,7c6,7
+< number of correct packets received at B:  6 
+< number of messages delivered to application:  6 
+---
+> number of correct packets received at B:  0 
+> number of messages delivered to application:  2 
+
+Failed basic send test
+see differences in behaviour below
+
+expected behaviour for test
+-----  Stop and Wait Network Simulator Version 1.1 -------- 
+
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 1.870574,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 0 to layer 3
+          START TIMER: starting timer at 1.870574
+
+EVENT time: 3.512484,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 1 to layer 3
+
+EVENT time: 4.926962,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 2 to layer 3
+
+EVENT time: 5.182523,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 3 to layer 3
+
+EVENT time: 5.953027,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 4 to layer 3
+
+EVENT time: 6.811561,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 5 to layer 3
+
+EVENT time: 7.335669,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+
+EVENT time: 8.247765,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is full
+
+EVENT time: 8.551395,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is full
+
+EVENT time: 9.087596,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is full
+
+EVENT time: 9.517292,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+
+EVENT time: 10.104663,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is full
+
+EVENT time: 11.271111,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 14.438572,  type: 2, fromlayer3  entity: 1
+----B: packet 2 is correctly received, send ACK!
+
+EVENT time: 14.990212,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 0 is received
+----A: ACK 0 is not a duplicate
+          STOP TIMER: stopping timer at 14.990212
+          START TIMER: starting timer at 14.990212
+
+EVENT time: 16.791710,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 1 is received
+----A: ACK 1 is not a duplicate
+          STOP TIMER: stopping timer at 16.791710
+          START TIMER: starting timer at 16.791710
+
+EVENT time: 19.409052,  type: 2, fromlayer3  entity: 1
+----B: packet 3 is correctly received, send ACK!
+
+EVENT time: 23.993544,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 2 is received
+----A: ACK 2 is not a duplicate
+          STOP TIMER: stopping timer at 23.993544
+          START TIMER: starting timer at 23.993544
+
+EVENT time: 24.681282,  type: 2, fromlayer3  entity: 1
+----B: packet 4 is correctly received, send ACK!
+
+EVENT time: 29.831514,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 3 is received
+----A: ACK 3 is not a duplicate
+          STOP TIMER: stopping timer at 29.831514
+          START TIMER: starting timer at 29.831514
+
+EVENT time: 30.710932,  type: 2, fromlayer3  entity: 1
+----B: packet 5 is correctly received, send ACK!
+
+EVENT time: 39.590763,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 4 is received
+----A: ACK 4 is not a duplicate
+          STOP TIMER: stopping timer at 39.590763
+          START TIMER: starting timer at 39.590763
+
+EVENT time: 40.649227,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 5 is received
+----A: ACK 5 is not a duplicate
+          STOP TIMER: stopping timer at 40.649227
+ Simulator terminated at time 40.649227
+ after attempting to send 10 msgs from layer5
+number of messages dropped due to full window:  4 
+number of valid (not corrupt or duplicate) acknowledgements received at A:  6 
+(note: a single acknowledgement may have acknowledged more than one packet - if cumulative acknowledgements are used)
+number of packet resends by A:  0 
+number of correct packets received at B:  6 
+number of messages delivered to application:  6 
+----------------------------
+your behaviour for test
+-----  Stop and Wait Network Simulator Version 1.1 -------- 
+
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 1.870574,  type: 1, fromlayer5  entity: 0
+          START TIMER: starting timer at 1.870574
+Sending packet 0 to layer 3
+
+EVENT time: 3.512484,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 4.926962,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 5.867321,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 6.129904,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 7.335669,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+
+EVENT time: 7.826823,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 9.356164,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 9.356164
+
+EVENT time: 9.658942,  type: 1, fromlayer5  entity: 0
+          START TIMER: starting timer at 9.658942
+Sending packet 1 to layer 3
+
+EVENT time: 10.429445,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 11.287980,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 13.160963,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 14.110348,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 14.629423,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+
+EVENT time: 22.092339,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 22.092339
+ Simulator terminated at time 22.092339
+ after attempting to send 10 msgs from layer5
+number of messages dropped due to full window:  0 
+number of valid (not corrupt or duplicate) acknowledgements received at A:  0 
+(note: a single acknowledgement may have acknowledged more than one packet - if cumulative acknowledgements are used)
+number of packet resends by A:  0 
+number of correct packets received at B:  0 
+number of messages delivered to application:  2 
+
+----------------------------
+differences
+sr.c: In function ‘A_output’:
+sr.c:78:5: warning: implicit declaration of function ‘memcpy’ [-Wimplicit-function-declaration]
+     memcpy(waiting_packet.payload, message.data, sizeof(message.data));
+     ^
+sr.c:78:5: warning: incompatible implicit declaration of built-in function ‘memcpy’ [enabled by default]
+sr.c: In function ‘B_input’:
+sr.c:145:9: warning: ISO C90 forbids mixed declarations and code [-Wpedantic]
+         struct msg message;
+         ^
+sr.c:146:9: warning: incompatible implicit declaration of built-in function ‘memcpy’ [enabled by default]
+         memcpy(message.data, packet.payload, sizeof(packet.payload));
+         ^
+sr.c:155:5: warning: ISO C90 forbids mixed declarations and code [-Wpedantic]
+     struct pkt ackpkt;
+     ^
+sr.c: At top level:
+sr.c:63:19: warning: ‘buffer’ defined but not used [-Wunused-variable]
+ static struct pkt buffer[WINDOWSIZE];  /* array for storing packets waiting for ACK */
+                   ^
+sr.c:64:12: warning: ‘windowfirst’ defined but not used [-Wunused-variable]
+ static int windowfirst, windowlast;    /* array indexes of the first/last packet awaiting ACK */
+            ^
+sr.c:64:25: warning: ‘windowlast’ defined but not used [-Wunused-variable]
+ static int windowfirst, windowlast;    /* array indexes of the first/last packet awaiting ACK */
+                         ^
+sr.c:65:12: warning: ‘windowcount’ defined but not used [-Wunused-variable]
+ static int windowcount;                /* the number of packets currently awaiting an ACK */
+            ^
+sr.c:129:12: warning: ‘B_nextseqnum’ defined but not used [-Wunused-variable]
+ static int B_nextseqnum;   /* the sequence number for the next packets sent by B */
+            ^
+Further testing is not possible until these errors are
+corrected.
+
+# ############ TEST 3 ##################
+running third test, lost ACK/timeout.....
+comparing output....
+3c3
+< number of valid (not corrupt or duplicate) acknowledgements received at A:  3 
+---
+> number of valid (not corrupt or duplicate) acknowledgements received at A:  0 
+5,7c5,7
+< number of packet resends by A:  26 
+< number of correct packets received at B:  29 
+< number of messages delivered to application:  3 
+---
+> number of packet resends by A:  0 
+> number of correct packets received at B:  0 
+> number of messages delivered to application:  1 
+
+Failed test
+see differences in behaviour below
+
+expected behaviour for test
+-----  Stop and Wait Network Simulator Version 1.1 -------- 
+
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:If you want loss or corruption to only occur in one direction, choose the direction: 0 A->B, 1 A<-B, 2 A<->B (both directions) :Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 1.870574,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 0 to layer 3
+          START TIMER: starting timer at 1.870574
+
+EVENT time: 3.512484,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 1 to layer 3
+
+EVENT time: 4.926962,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 2 to layer 3
+
+EVENT time: 5.182523,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 7.335669,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 9.517292,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 14.438572,  type: 2, fromlayer3  entity: 1
+----B: packet 2 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 16.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 16.870575
+
+EVENT time: 21.733980,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 31.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 31.870575
+
+EVENT time: 39.333488,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 46.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 46.870575
+
+EVENT time: 49.600815,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 61.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 61.870575
+
+EVENT time: 65.283478,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 76.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 76.870575
+
+EVENT time: 86.707260,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 91.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 91.870575
+
+EVENT time: 93.351204,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 106.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 106.870575
+
+EVENT time: 113.231277,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 121.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 121.870575
+
+EVENT time: 122.929039,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 136.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 136.870575
+
+EVENT time: 142.144669,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 151.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 151.870575
+
+EVENT time: 160.651840,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 166.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 166.870575
+
+EVENT time: 170.775055,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 181.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 181.870575
+
+EVENT time: 191.266663,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 196.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 196.870575
+
+EVENT time: 205.781357,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 211.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 211.870575
+
+EVENT time: 217.488251,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 226.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 226.870575
+
+EVENT time: 228.902390,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 241.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 241.870575
+
+EVENT time: 249.613510,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 256.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 256.870575
+
+EVENT time: 263.561920,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 271.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 271.870575
+
+EVENT time: 274.352936,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 286.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 286.870575
+
+EVENT time: 296.199585,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 301.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 301.870575
+
+EVENT time: 303.394287,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+
+EVENT time: 312.828766,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 0 is received
+----A: ACK 0 is not a duplicate
+          STOP TIMER: stopping timer at 312.828766
+          START TIMER: starting timer at 312.828766
+
+EVENT time: 327.828766,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 1
+          START TIMER: starting timer at 327.828766
+
+EVENT time: 336.654663,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 342.828766,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 1
+          START TIMER: starting timer at 342.828766
+
+EVENT time: 347.525391,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 357.828766,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 1
+          START TIMER: starting timer at 357.828766
+
+EVENT time: 365.615906,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 372.828766,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 1
+          START TIMER: starting timer at 372.828766
+
+EVENT time: 375.333984,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+
+EVENT time: 381.593262,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 1 is received
+----A: ACK 1 is not a duplicate
+          STOP TIMER: stopping timer at 381.593262
+          START TIMER: starting timer at 381.593262
+
+EVENT time: 396.593262,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 2
+          START TIMER: starting timer at 396.593262
+
+EVENT time: 398.362274,  type: 2, fromlayer3  entity: 1
+----B: packet 2 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 411.593262,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 2
+          START TIMER: starting timer at 411.593262
+
+EVENT time: 413.218933,  type: 2, fromlayer3  entity: 1
+----B: packet 2 is correctly received, send ACK!
+
+EVENT time: 415.368317,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 2 is received
+----A: ACK 2 is not a duplicate
+          STOP TIMER: stopping timer at 415.368317
+ Simulator terminated at time 415.368317
+ after attempting to send 3 msgs from layer5
+number of messages dropped due to full window:  0 
+number of valid (not corrupt or duplicate) acknowledgements received at A:  3 
+(note: a single acknowledgement may have acknowledged more than one packet - if cumulative acknowledgements are used)
+number of packet resends by A:  26 
+number of correct packets received at B:  29 
+number of messages delivered to application:  3 
+----------------------------
+your behaviour for test
+-----  Stop and Wait Network Simulator Version 1.1 -------- 
+
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:If you want loss or corruption to only occur in one direction, choose the direction: 0 A->B, 1 A<-B, 2 A<->B (both directions) :Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 1.870574,  type: 1, fromlayer5  entity: 0
+          START TIMER: starting timer at 1.870574
+Sending packet 0 to layer 3
+
+EVENT time: 3.512484,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 4.926962,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 5.867321,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 7.335669,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 16.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 16.870575
+
+EVENT time: 19.020599,  type: 2, fromlayer3  entity: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 31.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 31.870575
+
+EVENT time: 36.337841,  type: 2, fromlayer3  entity: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 46.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 46.870575
+
+EVENT time: 51.733982,  type: 2, fromlayer3  entity: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 61.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 61.870575
+
+EVENT time: 69.333488,  type: 2, fromlayer3  entity: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 76.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 76.870575
+
+EVENT time: 79.600815,  type: 2, fromlayer3  entity: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 91.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 91.870575
+
+EVENT time: 95.283478,  type: 2, fromlayer3  entity: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 106.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 106.870575
+
+EVENT time: 116.707260,  type: 2, fromlayer3  entity: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 121.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 121.870575
+
+EVENT time: 123.351204,  type: 2, fromlayer3  entity: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 136.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 136.870575
+
+EVENT time: 143.231277,  type: 2, fromlayer3  entity: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 151.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 151.870575
+
+EVENT time: 152.929047,  type: 2, fromlayer3  entity: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 166.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 166.870575
+
+EVENT time: 172.144669,  type: 2, fromlayer3  entity: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 181.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 181.870575
+
+EVENT time: 190.651840,  type: 2, fromlayer3  entity: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 196.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 196.870575
+
+EVENT time: 200.775055,  type: 2, fromlayer3  entity: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 211.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 211.870575
+
+EVENT time: 221.266663,  type: 2, fromlayer3  entity: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 226.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 226.870575
+
+EVENT time: 235.781357,  type: 2, fromlayer3  entity: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 241.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 241.870575
+
+EVENT time: 247.488251,  type: 2, fromlayer3  entity: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 256.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 256.870575
+
+EVENT time: 258.902405,  type: 2, fromlayer3  entity: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 271.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 271.870575
+
+EVENT time: 279.613525,  type: 2, fromlayer3  entity: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 286.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 286.870575
+
+EVENT time: 293.561920,  type: 2, fromlayer3  entity: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 301.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 301.870575
+
+EVENT time: 304.352936,  type: 2, fromlayer3  entity: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 316.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 316.870575
+
+EVENT time: 326.199585,  type: 2, fromlayer3  entity: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 331.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 331.870575
+
+EVENT time: 333.394287,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 342.828766,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 342.828766
+ Simulator terminated at time 342.828766
+ after attempting to send 3 msgs from layer5
+number of messages dropped due to full window:  0 
+number of valid (not corrupt or duplicate) acknowledgements received at A:  0 
+(note: a single acknowledgement may have acknowledged more than one packet - if cumulative acknowledgements are used)
+number of packet resends by A:  0 
+number of correct packets received at B:  0 
+number of messages delivered to application:  1 
+
+----------------------------
+differences
+sr.c: In function ‘A_output’:
+sr.c:78:5: warning: implicit declaration of function ‘memcpy’ [-Wimplicit-function-declaration]
+     memcpy(waiting_packet.payload, message.data, sizeof(message.data));
+     ^
+sr.c:78:5: warning: incompatible implicit declaration of built-in function ‘memcpy’ [enabled by default]
+sr.c: In function ‘B_input’:
+sr.c:145:9: warning: ISO C90 forbids mixed declarations and code [-Wpedantic]
+         struct msg message;
+         ^
+sr.c:146:9: warning: incompatible implicit declaration of built-in function ‘memcpy’ [enabled by default]
+         memcpy(message.data, packet.payload, sizeof(packet.payload));
+         ^
+sr.c:155:5: warning: ISO C90 forbids mixed declarations and code [-Wpedantic]
+     struct pkt ackpkt;
+     ^
+sr.c: At top level:
+sr.c:63:19: warning: ‘buffer’ defined but not used [-Wunused-variable]
+ static struct pkt buffer[WINDOWSIZE];  /* array for storing packets waiting for ACK */
+                   ^
+sr.c:64:12: warning: ‘windowfirst’ defined but not used [-Wunused-variable]
+ static int windowfirst, windowlast;    /* array indexes of the first/last packet awaiting ACK */
+            ^
+sr.c:64:25: warning: ‘windowlast’ defined but not used [-Wunused-variable]
+ static int windowfirst, windowlast;    /* array indexes of the first/last packet awaiting ACK */
+                         ^
+sr.c:65:12: warning: ‘windowcount’ defined but not used [-Wunused-variable]
+ static int windowcount;                /* the number of packets currently awaiting an ACK */
+            ^
+sr.c:129:12: warning: ‘B_nextseqnum’ defined but not used [-Wunused-variable]
+ static int B_nextseqnum;   /* the sequence number for the next packets sent by B */
+            ^
+Further testing is not possible until these errors are
+corrected.
+
+# ############ TEST 4 ##################
+running fourth test, corrupted packet.....
+comparing output....
+3c3
+< number of valid (not corrupt or duplicate) acknowledgements received at A:  3 
+---
+> number of valid (not corrupt or duplicate) acknowledgements received at A:  0 
+5,7c5,7
+< number of packet resends by A:  7 
+< number of correct packets received at B:  3 
+< number of messages delivered to application:  3 
+---
+> number of packet resends by A:  0 
+> number of correct packets received at B:  0 
+> number of messages delivered to application:  1 
+
+Failed test
+see differences in behaviour below
+
+expected behaviour for test
+-----  Stop and Wait Network Simulator Version 1.1 -------- 
+
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:If you want loss or corruption to only occur in one direction, choose the direction: 0 A->B, 1 A<-B, 2 A<->B (both directions) :Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 1.870574,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 0 to layer 3
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 1.870574
+
+EVENT time: 3.512484,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 1 to layer 3
+          TOLAYER3: packet being corrupted
+
+EVENT time: 4.452843,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 2 to layer 3
+          TOLAYER3: packet being corrupted
+
+EVENT time: 5.324238,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 7.335669,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 15.971805,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 16.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 16.870575
+
+EVENT time: 20.439072,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 25.302477,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+
+EVENT time: 31.600891,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 0 is received
+----A: ACK 0 is not a duplicate
+          STOP TIMER: stopping timer at 31.600891
+          START TIMER: starting timer at 31.600891
+
+EVENT time: 46.600891,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 1
+          START TIMER: starting timer at 46.600891
+
+EVENT time: 52.630543,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+
+EVENT time: 60.285088,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 1 is received
+----A: ACK 1 is not a duplicate
+          STOP TIMER: stopping timer at 60.285088
+          START TIMER: starting timer at 60.285088
+
+EVENT time: 75.285088,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 2
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 75.285088
+
+EVENT time: 78.697990,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 90.285088,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 2
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 90.285088
+
+EVENT time: 100.121773,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 105.285088,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 2
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 105.285088
+
+EVENT time: 106.765717,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 120.285088,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 2
+          START TIMER: starting timer at 120.285088
+
+EVENT time: 126.645790,  type: 2, fromlayer3  entity: 1
+----B: packet 2 is correctly received, send ACK!
+
+EVENT time: 135.285095,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 2
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 135.285095
+
+EVENT time: 136.473755,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 2 is received
+----A: ACK 2 is not a duplicate
+          STOP TIMER: stopping timer at 136.473755
+
+EVENT time: 136.591476,  type: 2, fromlayer3  entity: 1
+ Simulator terminated at time 136.591476
+ after attempting to send 3 msgs from layer5
+number of messages dropped due to full window:  0 
+number of valid (not corrupt or duplicate) acknowledgements received at A:  3 
+(note: a single acknowledgement may have acknowledged more than one packet - if cumulative acknowledgements are used)
+number of packet resends by A:  7 
+number of correct packets received at B:  3 
+number of messages delivered to application:  3 
+----------------------------
+your behaviour for test
+-----  Stop and Wait Network Simulator Version 1.1 -------- 
+
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:If you want loss or corruption to only occur in one direction, choose the direction: 0 A->B, 1 A<-B, 2 A<->B (both directions) :Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 1.870574,  type: 1, fromlayer5  entity: 0
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 1.870574
+Sending packet 0 to layer 3
+
+EVENT time: 3.512484,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 4.452843,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 4.715425,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 7.335669,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 9.485692,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 9.485692
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 9.485692
+
+EVENT time: 18.730230,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 20.208651,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 20.208651
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 20.208651
+
+EVENT time: 25.480881,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 31.510530,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 31.510530
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 31.510530
+
+EVENT time: 39.165073,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 44.741875,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 44.741875
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 44.741875
+
+EVENT time: 54.578556,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 56.059189,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 56.059189
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 56.059189
+
+EVENT time: 58.689846,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 68.517815,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 68.517815
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 68.517815
+
+EVENT time: 69.824203,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 71.044487,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 71.044487
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 71.044487
+
+EVENT time: 77.294418,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 82.113701,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 82.113701
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 82.113701
+
+EVENT time: 91.509781,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 97.113701,  type: 0, timerinterrupt   entity: 0
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 97.113701
+
+EVENT time: 100.420563,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 100.420563
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 100.420563
+
+EVENT time: 106.505119,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 108.483490,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 108.595406,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 108.595406
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 108.595406
+
+EVENT time: 114.607559,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 114.607559
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 114.607559
+
+EVENT time: 114.827843,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 120.337578,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 122.689789,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 122.689789
+          START TIMER: starting timer at 122.689789
+
+EVENT time: 124.213493,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 124.213493
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 124.213493
+
+EVENT time: 132.124283,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+
+EVENT time: 136.820892,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 136.820892
+
+EVENT time: 140.950180,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 146.453140,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 146.453140
+Warning: unable to cancel your timer. It wasn't running.
+ Simulator terminated at time 146.453140
+ after attempting to send 3 msgs from layer5
+number of messages dropped due to full window:  0 
+number of valid (not corrupt or duplicate) acknowledgements received at A:  0 
+(note: a single acknowledgement may have acknowledged more than one packet - if cumulative acknowledgements are used)
+number of packet resends by A:  0 
+number of correct packets received at B:  0 
+number of messages delivered to application:  1 
+
+----------------------------
+differences
+sr.c: In function ‘A_output’:
+sr.c:78:5: warning: implicit declaration of function ‘memcpy’ [-Wimplicit-function-declaration]
+     memcpy(waiting_packet.payload, message.data, sizeof(message.data));
+     ^
+sr.c:78:5: warning: incompatible implicit declaration of built-in function ‘memcpy’ [enabled by default]
+sr.c: In function ‘B_input’:
+sr.c:145:9: warning: ISO C90 forbids mixed declarations and code [-Wpedantic]
+         struct msg message;
+         ^
+sr.c:146:9: warning: incompatible implicit declaration of built-in function ‘memcpy’ [enabled by default]
+         memcpy(message.data, packet.payload, sizeof(packet.payload));
+         ^
+sr.c:155:5: warning: ISO C90 forbids mixed declarations and code [-Wpedantic]
+     struct pkt ackpkt;
+     ^
+sr.c: At top level:
+sr.c:63:19: warning: ‘buffer’ defined but not used [-Wunused-variable]
+ static struct pkt buffer[WINDOWSIZE];  /* array for storing packets waiting for ACK */
+                   ^
+sr.c:64:12: warning: ‘windowfirst’ defined but not used [-Wunused-variable]
+ static int windowfirst, windowlast;    /* array indexes of the first/last packet awaiting ACK */
+            ^
+sr.c:64:25: warning: ‘windowlast’ defined but not used [-Wunused-variable]
+ static int windowfirst, windowlast;    /* array indexes of the first/last packet awaiting ACK */
+                         ^
+sr.c:65:12: warning: ‘windowcount’ defined but not used [-Wunused-variable]
+ static int windowcount;                /* the number of packets currently awaiting an ACK */
+            ^
+sr.c:129:12: warning: ‘B_nextseqnum’ defined but not used [-Wunused-variable]
+ static int B_nextseqnum;   /* the sequence number for the next packets sent by B */
+            ^
+Further testing is not possible until these errors are
+corrected.
+
+# ############ TEST 5 ##################
+running fifth test, corrupted ACK.....
+comparing output....
+3c3
+< number of valid (not corrupt or duplicate) acknowledgements received at A:  3 
+---
+> number of valid (not corrupt or duplicate) acknowledgements received at A:  0 
+5,7c5,7
+< number of packet resends by A:  8 
+< number of correct packets received at B:  11 
+< number of messages delivered to application:  3 
+---
+> number of packet resends by A:  0 
+> number of correct packets received at B:  0 
+> number of messages delivered to application:  1 
+
+Failed test
+see differences in behaviour below
+
+expected behaviour for test
+-----  Stop and Wait Network Simulator Version 1.1 -------- 
+
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:If you want loss or corruption to only occur in one direction, choose the direction: 0 A->B, 1 A<-B, 2 A<->B (both directions) :Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 1.870574,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 0 to layer 3
+          START TIMER: starting timer at 1.870574
+
+EVENT time: 3.512484,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 1 to layer 3
+
+EVENT time: 4.926962,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 2 to layer 3
+
+EVENT time: 5.182523,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 7.335669,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being corrupted
+
+EVENT time: 8.634885,  type: 2, fromlayer3  entity: 0
+----A: corrupted ACK is received, do nothing!
+
+EVENT time: 9.517292,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+          TOLAYER3: packet being corrupted
+
+EVENT time: 14.438572,  type: 2, fromlayer3  entity: 1
+----B: packet 2 is correctly received, send ACK!
+          TOLAYER3: packet being corrupted
+
+EVENT time: 16.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 16.870575
+
+EVENT time: 18.945717,  type: 2, fromlayer3  entity: 0
+----A: corrupted ACK is received, do nothing!
+
+EVENT time: 23.148359,  type: 2, fromlayer3  entity: 0
+----A: corrupted ACK is received, do nothing!
+
+EVENT time: 24.525120,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being corrupted
+
+EVENT time: 27.938023,  type: 2, fromlayer3  entity: 0
+----A: corrupted ACK is received, do nothing!
+
+EVENT time: 31.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 31.870575
+
+EVENT time: 41.707256,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being corrupted
+
+EVENT time: 46.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 46.870575
+
+EVENT time: 48.909092,  type: 2, fromlayer3  entity: 0
+----A: corrupted ACK is received, do nothing!
+
+EVENT time: 49.501232,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+
+EVENT time: 51.376427,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 0 is received
+----A: ACK 0 is not a duplicate
+          STOP TIMER: stopping timer at 51.376427
+          START TIMER: starting timer at 51.376427
+
+EVENT time: 66.376427,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 1
+          START TIMER: starting timer at 66.376427
+
+EVENT time: 72.222099,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+          TOLAYER3: packet being corrupted
+
+EVENT time: 77.496201,  type: 2, fromlayer3  entity: 0
+----A: corrupted ACK is received, do nothing!
+
+EVENT time: 81.376427,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 1
+          START TIMER: starting timer at 81.376427
+
+EVENT time: 90.157684,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+          TOLAYER3: packet being corrupted
+
+EVENT time: 91.669182,  type: 2, fromlayer3  entity: 0
+----A: corrupted ACK is received, do nothing!
+
+EVENT time: 96.376427,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 1
+          START TIMER: starting timer at 96.376427
+
+EVENT time: 102.693810,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+
+EVENT time: 109.812691,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 1 is received
+----A: ACK 1 is not a duplicate
+          STOP TIMER: stopping timer at 109.812691
+          START TIMER: starting timer at 109.812691
+
+EVENT time: 124.812691,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 2
+          START TIMER: starting timer at 124.812691
+
+EVENT time: 126.090149,  type: 2, fromlayer3  entity: 1
+----B: packet 2 is correctly received, send ACK!
+          TOLAYER3: packet being corrupted
+
+EVENT time: 131.707825,  type: 2, fromlayer3  entity: 0
+----A: corrupted ACK is received, do nothing!
+
+EVENT time: 139.812683,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 2
+          START TIMER: starting timer at 139.812683
+
+EVENT time: 141.844498,  type: 2, fromlayer3  entity: 1
+----B: packet 2 is correctly received, send ACK!
+
+EVENT time: 143.934784,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 2 is received
+----A: ACK 2 is not a duplicate
+          STOP TIMER: stopping timer at 143.934784
+ Simulator terminated at time 143.934784
+ after attempting to send 3 msgs from layer5
+number of messages dropped due to full window:  0 
+number of valid (not corrupt or duplicate) acknowledgements received at A:  3 
+(note: a single acknowledgement may have acknowledged more than one packet - if cumulative acknowledgements are used)
+number of packet resends by A:  8 
+number of correct packets received at B:  11 
+number of messages delivered to application:  3 
+----------------------------
+your behaviour for test
+-----  Stop and Wait Network Simulator Version 1.1 -------- 
+
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:If you want loss or corruption to only occur in one direction, choose the direction: 0 A->B, 1 A<-B, 2 A<->B (both directions) :Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 1.870574,  type: 1, fromlayer5  entity: 0
+          START TIMER: starting timer at 1.870574
+Sending packet 0 to layer 3
+
+EVENT time: 3.512484,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 4.926962,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 5.867321,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 7.335669,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+          TOLAYER3: packet being corrupted
+
+EVENT time: 15.971805,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 15.971805
+ Simulator terminated at time 15.971805
+ after attempting to send 3 msgs from layer5
+number of messages dropped due to full window:  0 
+number of valid (not corrupt or duplicate) acknowledgements received at A:  0 
+(note: a single acknowledgement may have acknowledged more than one packet - if cumulative acknowledgements are used)
+number of packet resends by A:  0 
+number of correct packets received at B:  0 
+number of messages delivered to application:  1 
+
+----------------------------
+differences
+sr.c: In function ‘A_output’:
+sr.c:78:5: warning: implicit declaration of function ‘memcpy’ [-Wimplicit-function-declaration]
+     memcpy(waiting_packet.payload, message.data, sizeof(message.data));
+     ^
+sr.c:78:5: warning: incompatible implicit declaration of built-in function ‘memcpy’ [enabled by default]
+sr.c: In function ‘B_input’:
+sr.c:145:9: warning: ISO C90 forbids mixed declarations and code [-Wpedantic]
+         struct msg message;
+         ^
+sr.c:146:9: warning: incompatible implicit declaration of built-in function ‘memcpy’ [enabled by default]
+         memcpy(message.data, packet.payload, sizeof(packet.payload));
+         ^
+sr.c:155:5: warning: ISO C90 forbids mixed declarations and code [-Wpedantic]
+     struct pkt ackpkt;
+     ^
+sr.c: At top level:
+sr.c:63:19: warning: ‘buffer’ defined but not used [-Wunused-variable]
+ static struct pkt buffer[WINDOWSIZE];  /* array for storing packets waiting for ACK */
+                   ^
+sr.c:64:12: warning: ‘windowfirst’ defined but not used [-Wunused-variable]
+ static int windowfirst, windowlast;    /* array indexes of the first/last packet awaiting ACK */
+            ^
+sr.c:64:25: warning: ‘windowlast’ defined but not used [-Wunused-variable]
+ static int windowfirst, windowlast;    /* array indexes of the first/last packet awaiting ACK */
+                         ^
+sr.c:65:12: warning: ‘windowcount’ defined but not used [-Wunused-variable]
+ static int windowcount;                /* the number of packets currently awaiting an ACK */
+            ^
+sr.c:129:12: warning: ‘B_nextseqnum’ defined but not used [-Wunused-variable]
+ static int B_nextseqnum;   /* the sequence number for the next packets sent by B */
+            ^
+Further testing is not possible until these errors are
+corrected.
+
+# ############ TEST 6 ##################
+running sixth test, delivering previously buffered packets.....
+comparing output....
+3c3
+< number of valid (not corrupt or duplicate) acknowledgements received at A:  4 
+---
+> number of valid (not corrupt or duplicate) acknowledgements received at A:  0 
+5,7c5,7
+< number of packet resends by A:  1 
+< number of correct packets received at B:  4 
+< number of messages delivered to application:  4 
+---
+> number of packet resends by A:  0 
+> number of correct packets received at B:  0 
+> number of messages delivered to application:  1 
+
+Failed test
+see differences in behaviour below
+
+expected behaviour for test
+-----  Stop and Wait Network Simulator Version 1.1 -------- 
+
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:If you want loss or corruption to only occur in one direction, choose the direction: 0 A->B, 1 A<-B, 2 A<->B (both directions) :Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 1.870574,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 0 to layer 3
+          START TIMER: starting timer at 1.870574
+
+EVENT time: 3.512484,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 1 to layer 3
+
+EVENT time: 4.926962,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 2 to layer 3
+          TOLAYER3: packet being lost
+
+EVENT time: 5.182523,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 3 to layer 3
+
+EVENT time: 6.053919,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 7.335669,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+
+EVENT time: 8.814089,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 0 is received
+----A: ACK 0 is not a duplicate
+          STOP TIMER: stopping timer at 8.814089
+          START TIMER: starting timer at 8.814089
+
+EVENT time: 9.517292,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+
+EVENT time: 13.984557,  type: 2, fromlayer3  entity: 1
+----B: packet 3 is correctly received, send ACK!
+
+EVENT time: 14.789521,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 1 is received
+----A: ACK 1 is not a duplicate
+          STOP TIMER: stopping timer at 14.789521
+          START TIMER: starting timer at 14.789521
+
+EVENT time: 18.992163,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 3 is received
+----A: ACK 3 is not a duplicate
+
+EVENT time: 29.789520,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 2
+          START TIMER: starting timer at 29.789520
+
+EVENT time: 32.519760,  type: 2, fromlayer3  entity: 1
+----B: packet 2 is correctly received, send ACK!
+
+EVENT time: 34.886101,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 2 is received
+----A: ACK 2 is not a duplicate
+          STOP TIMER: stopping timer at 34.886101
+ Simulator terminated at time 34.886101
+ after attempting to send 4 msgs from layer5
+number of messages dropped due to full window:  0 
+number of valid (not corrupt or duplicate) acknowledgements received at A:  4 
+(note: a single acknowledgement may have acknowledged more than one packet - if cumulative acknowledgements are used)
+number of packet resends by A:  1 
+number of correct packets received at B:  4 
+number of messages delivered to application:  4 
+----------------------------
+your behaviour for test
+-----  Stop and Wait Network Simulator Version 1.1 -------- 
+
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:If you want loss or corruption to only occur in one direction, choose the direction: 0 A->B, 1 A<-B, 2 A<->B (both directions) :Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 1.870574,  type: 1, fromlayer5  entity: 0
+          START TIMER: starting timer at 1.870574
+Sending packet 0 to layer 3
+
+EVENT time: 3.512484,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 4.926962,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 5.867321,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 6.129904,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 7.335669,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+
+EVENT time: 9.485692,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 9.485692
+ Simulator terminated at time 9.485692
+ after attempting to send 4 msgs from layer5
+number of messages dropped due to full window:  0 
+number of valid (not corrupt or duplicate) acknowledgements received at A:  0 
+(note: a single acknowledgement may have acknowledged more than one packet - if cumulative acknowledgements are used)
+number of packet resends by A:  0 
+number of correct packets received at B:  0 
+number of messages delivered to application:  1 
+
+----------------------------
+differences
+sr.c: In function ‘A_output’:
+sr.c:78:5: warning: implicit declaration of function ‘memcpy’ [-Wimplicit-function-declaration]
+     memcpy(waiting_packet.payload, message.data, sizeof(message.data));
+     ^
+sr.c:78:5: warning: incompatible implicit declaration of built-in function ‘memcpy’ [enabled by default]
+sr.c: In function ‘B_input’:
+sr.c:145:9: warning: ISO C90 forbids mixed declarations and code [-Wpedantic]
+         struct msg message;
+         ^
+sr.c:146:9: warning: incompatible implicit declaration of built-in function ‘memcpy’ [enabled by default]
+         memcpy(message.data, packet.payload, sizeof(packet.payload));
+         ^
+sr.c:155:5: warning: ISO C90 forbids mixed declarations and code [-Wpedantic]
+     struct pkt ackpkt;
+     ^
+sr.c: At top level:
+sr.c:63:19: warning: ‘buffer’ defined but not used [-Wunused-variable]
+ static struct pkt buffer[WINDOWSIZE];  /* array for storing packets waiting for ACK */
+                   ^
+sr.c:64:12: warning: ‘windowfirst’ defined but not used [-Wunused-variable]
+ static int windowfirst, windowlast;    /* array indexes of the first/last packet awaiting ACK */
+            ^
+sr.c:64:25: warning: ‘windowlast’ defined but not used [-Wunused-variable]
+ static int windowfirst, windowlast;    /* array indexes of the first/last packet awaiting ACK */
+                         ^
+sr.c:65:12: warning: ‘windowcount’ defined but not used [-Wunused-variable]
+ static int windowcount;                /* the number of packets currently awaiting an ACK */
+            ^
+sr.c:129:12: warning: ‘B_nextseqnum’ defined but not used [-Wunused-variable]
+ static int B_nextseqnum;   /* the sequence number for the next packets sent by B */
+            ^
+Further testing is not possible until these errors are
+corrected.
+
+# ############ TEST 7 ##################
+running seventh test, lost packet, duplicate packet, duplicate ACK.....
+comparing output....
+3c3
+< number of valid (not corrupt or duplicate) acknowledgements received at A:  3 
+---
+> number of valid (not corrupt or duplicate) acknowledgements received at A:  0 
+5,7c5,7
+< number of packet resends by A:  8 
+< number of correct packets received at B:  3 
+< number of messages delivered to application:  3 
+---
+> number of packet resends by A:  0 
+> number of correct packets received at B:  0 
+> number of messages delivered to application:  1 
+
+Failed test
+see differences in behaviour below
+
+expected behaviour for test
+-----  Stop and Wait Network Simulator Version 1.1 -------- 
+
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:If you want loss or corruption to only occur in one direction, choose the direction: 0 A->B, 1 A<-B, 2 A<->B (both directions) :Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 1.870574,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 0 to layer 3
+          TOLAYER3: packet being lost
+          START TIMER: starting timer at 1.870574
+
+EVENT time: 3.512484,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 1 to layer 3
+          TOLAYER3: packet being lost
+
+EVENT time: 4.504727,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 2 to layer 3
+          TOLAYER3: packet being lost
+
+EVENT time: 5.919206,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 16.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          TOLAYER3: packet being lost
+          START TIMER: starting timer at 16.870575
+
+EVENT time: 31.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 31.870575
+
+EVENT time: 34.020599,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+
+EVENT time: 43.265137,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 0 is received
+----A: ACK 0 is not a duplicate
+          STOP TIMER: stopping timer at 43.265137
+          START TIMER: starting timer at 43.265137
+
+EVENT time: 58.265137,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 1
+          TOLAYER3: packet being lost
+          START TIMER: starting timer at 58.265137
+
+EVENT time: 73.265137,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 1
+          TOLAYER3: packet being lost
+          START TIMER: starting timer at 73.265137
+
+EVENT time: 88.265137,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 1
+          TOLAYER3: packet being lost
+          START TIMER: starting timer at 88.265137
+
+EVENT time: 103.265137,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 1
+          TOLAYER3: packet being lost
+          START TIMER: starting timer at 103.265137
+
+EVENT time: 118.265137,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 1
+          START TIMER: starting timer at 118.265137
+
+EVENT time: 123.537369,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+
+EVENT time: 127.740013,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 1 is received
+----A: ACK 1 is not a duplicate
+          STOP TIMER: stopping timer at 127.740013
+          START TIMER: starting timer at 127.740013
+
+EVENT time: 142.740021,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 2
+          START TIMER: starting timer at 142.740021
+
+EVENT time: 145.470261,  type: 2, fromlayer3  entity: 1
+----B: packet 2 is correctly received, send ACK!
+
+EVENT time: 147.836609,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 2 is received
+----A: ACK 2 is not a duplicate
+          STOP TIMER: stopping timer at 147.836609
+ Simulator terminated at time 147.836609
+ after attempting to send 3 msgs from layer5
+number of messages dropped due to full window:  0 
+number of valid (not corrupt or duplicate) acknowledgements received at A:  3 
+(note: a single acknowledgement may have acknowledged more than one packet - if cumulative acknowledgements are used)
+number of packet resends by A:  8 
+number of correct packets received at B:  3 
+number of messages delivered to application:  3 
+----------------------------
+your behaviour for test
+-----  Stop and Wait Network Simulator Version 1.1 -------- 
+
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:If you want loss or corruption to only occur in one direction, choose the direction: 0 A->B, 1 A<-B, 2 A<->B (both directions) :Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 1.870574,  type: 1, fromlayer5  entity: 0
+          TOLAYER3: packet being lost
+          START TIMER: starting timer at 1.870574
+Sending packet 0 to layer 3
+
+EVENT time: 3.512484,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 4.504727,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 5.028524,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 16.870575,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 16.870575
+
+EVENT time: 22.102188,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+
+EVENT time: 24.252213,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 24.252213
+ Simulator terminated at time 24.252213
+ after attempting to send 3 msgs from layer5
+number of messages dropped due to full window:  0 
+number of valid (not corrupt or duplicate) acknowledgements received at A:  0 
+(note: a single acknowledgement may have acknowledged more than one packet - if cumulative acknowledgements are used)
+number of packet resends by A:  0 
+number of correct packets received at B:  0 
+number of messages delivered to application:  1 
+
+----------------------------
+differences
+sr.c: In function ‘A_output’:
+sr.c:78:5: warning: implicit declaration of function ‘memcpy’ [-Wimplicit-function-declaration]
+     memcpy(waiting_packet.payload, message.data, sizeof(message.data));
+     ^
+sr.c:78:5: warning: incompatible implicit declaration of built-in function ‘memcpy’ [enabled by default]
+sr.c: In function ‘B_input’:
+sr.c:145:9: warning: ISO C90 forbids mixed declarations and code [-Wpedantic]
+         struct msg message;
+         ^
+sr.c:146:9: warning: incompatible implicit declaration of built-in function ‘memcpy’ [enabled by default]
+         memcpy(message.data, packet.payload, sizeof(packet.payload));
+         ^
+sr.c:155:5: warning: ISO C90 forbids mixed declarations and code [-Wpedantic]
+     struct pkt ackpkt;
+     ^
+sr.c: At top level:
+sr.c:63:19: warning: ‘buffer’ defined but not used [-Wunused-variable]
+ static struct pkt buffer[WINDOWSIZE];  /* array for storing packets waiting for ACK */
+                   ^
+sr.c:64:12: warning: ‘windowfirst’ defined but not used [-Wunused-variable]
+ static int windowfirst, windowlast;    /* array indexes of the first/last packet awaiting ACK */
+            ^
+sr.c:64:25: warning: ‘windowlast’ defined but not used [-Wunused-variable]
+ static int windowfirst, windowlast;    /* array indexes of the first/last packet awaiting ACK */
+                         ^
+sr.c:65:12: warning: ‘windowcount’ defined but not used [-Wunused-variable]
+ static int windowcount;                /* the number of packets currently awaiting an ACK */
+            ^
+sr.c:129:12: warning: ‘B_nextseqnum’ defined but not used [-Wunused-variable]
+ static int B_nextseqnum;   /* the sequence number for the next packets sent by B */
+            ^
+Further testing is not possible until these errors are
+corrected.
+
+# ############ TEST 8 ##################
+running eighth test, mixed events, window management.....
+comparing output....
+2,3c2,3
+< number of messages dropped due to full window:  6 
+< number of valid (not corrupt or duplicate) acknowledgements received at A:  9 
+---
+> number of messages dropped due to full window:  0 
+> number of valid (not corrupt or duplicate) acknowledgements received at A:  0 
+5,7c5,7
+< number of packet resends by A:  4 
+< number of correct packets received at B:  11 
+< number of messages delivered to application:  9 
+---
+> number of packet resends by A:  0 
+> number of correct packets received at B:  0 
+> number of messages delivered to application:  3 
+
+Failed test
+see differences in behaviour below
+
+expected behaviour for test
+-----  Stop and Wait Network Simulator Version 1.1 -------- 
+
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:If you want loss or corruption to only occur in one direction, choose the direction: 0 A->B, 1 A<-B, 2 A<->B (both directions) :Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 5.611722,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 0 to layer 3
+          START TIMER: starting timer at 5.611722
+
+EVENT time: 10.537452,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 1 to layer 3
+
+EVENT time: 11.076818,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+
+EVENT time: 13.097313,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 0 is received
+----A: ACK 0 is not a duplicate
+          STOP TIMER: stopping timer at 13.097313
+          START TIMER: starting timer at 13.097313
+
+EVENT time: 13.258441,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+
+EVENT time: 14.780887,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 2 to layer 3
+          TOLAYER3: packet being lost
+
+EVENT time: 17.427874,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 3 to layer 3
+
+EVENT time: 17.725706,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 1 is received
+----A: ACK 1 is not a duplicate
+          STOP TIMER: stopping timer at 17.725706
+          START TIMER: starting timer at 17.725706
+
+EVENT time: 20.003477,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 4 to layer 3
+
+EVENT time: 22.700104,  type: 2, fromlayer3  entity: 1
+----B: packet 3 is correctly received, send ACK!
+
+EVENT time: 24.312088,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 5 to layer 3
+
+EVENT time: 25.222982,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 6 to layer 3
+
+EVENT time: 25.757315,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 7 to layer 3
+          TOLAYER3: packet being lost
+
+EVENT time: 28.729753,  type: 2, fromlayer3  entity: 1
+----B: packet 4 is correctly received, send ACK!
+
+EVENT time: 29.891870,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is full
+
+EVENT time: 30.354649,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 3 is received
+----A: ACK 3 is not a duplicate
+
+EVENT time: 32.725708,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 2
+          START TIMER: starting timer at 32.725708
+
+EVENT time: 33.465672,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is full
+
+EVENT time: 33.504650,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is full
+
+EVENT time: 34.306553,  type: 2, fromlayer3  entity: 1
+----B: packet 5 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 36.192619,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 4 is received
+----A: ACK 4 is not a duplicate
+
+EVENT time: 36.735100,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is full
+
+EVENT time: 39.349682,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is full
+
+EVENT time: 40.555573,  type: 2, fromlayer3  entity: 1
+----B: packet 6 is correctly received, send ACK!
+
+EVENT time: 41.775856,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 6 is received
+----A: ACK 6 is not a duplicate
+
+EVENT time: 42.199081,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is full
+
+EVENT time: 42.430767,  type: 2, fromlayer3  entity: 1
+----B: packet 2 is correctly received, send ACK!
+
+EVENT time: 44.186447,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 2 is received
+----A: ACK 2 is not a duplicate
+          STOP TIMER: stopping timer at 44.186447
+          START TIMER: starting timer at 44.186447
+
+EVENT time: 47.386589,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 8 to layer 3
+
+EVENT time: 49.322910,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 50.264431,  type: 2, fromlayer3  entity: 1
+----B: packet 8 is correctly received, send ACK!
+
+EVENT time: 53.926193,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 8 is received
+----A: ACK 8 is not a duplicate
+
+EVENT time: 59.186447,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 5
+          START TIMER: starting timer at 59.186447
+
+EVENT time: 68.097229,  type: 2, fromlayer3  entity: 1
+----B: packet 5 is correctly received, send ACK!
+
+EVENT time: 74.186447,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 5
+          START TIMER: starting timer at 74.186447
+
+EVENT time: 76.208519,  type: 2, fromlayer3  entity: 1
+----B: packet 5 is correctly received, send ACK!
+
+EVENT time: 77.488647,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 5 is received
+----A: ACK 5 is not a duplicate
+          STOP TIMER: stopping timer at 77.488647
+          START TIMER: starting timer at 77.488647
+
+EVENT time: 80.385910,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 5 is received
+----A: duplicate ACK received, do nothing!
+
+EVENT time: 92.488647,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 7
+          START TIMER: starting timer at 92.488647
+
+EVENT time: 100.231590,  type: 2, fromlayer3  entity: 1
+----B: packet 7 is correctly received, send ACK!
+
+EVENT time: 103.248627,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 7 is received
+----A: ACK 7 is not a duplicate
+          STOP TIMER: stopping timer at 103.248627
+ Simulator terminated at time 103.248627
+ after attempting to send 15 msgs from layer5
+number of messages dropped due to full window:  6 
+number of valid (not corrupt or duplicate) acknowledgements received at A:  9 
+(note: a single acknowledgement may have acknowledged more than one packet - if cumulative acknowledgements are used)
+number of packet resends by A:  4 
+number of correct packets received at B:  11 
+number of messages delivered to application:  9 
+----------------------------
+your behaviour for test
+-----  Stop and Wait Network Simulator Version 1.1 -------- 
+
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:If you want loss or corruption to only occur in one direction, choose the direction: 0 A->B, 1 A<-B, 2 A<->B (both directions) :Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 5.611722,  type: 1, fromlayer5  entity: 0
+          START TIMER: starting timer at 5.611722
+Sending packet 0 to layer 3
+
+EVENT time: 10.537452,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 11.076818,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+
+EVENT time: 13.258441,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 13.258441
+
+EVENT time: 14.780887,  type: 1, fromlayer5  entity: 0
+          START TIMER: starting timer at 14.780887
+Sending packet 1 to layer 3
+
+EVENT time: 15.547569,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 17.859079,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 18.058558,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 19.702166,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+          TOLAYER3: packet being lost
+
+EVENT time: 20.705545,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 23.281149,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 28.900099,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 29.780888,  type: 0, timerinterrupt   entity: 0
+          START TIMER: starting timer at 29.780888
+
+EVENT time: 31.748251,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 35.101353,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 37.243801,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 40.447128,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 41.358021,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 42.966621,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 44.780888,  type: 0, timerinterrupt   entity: 0
+          TOLAYER3: packet being lost
+          START TIMER: starting timer at 44.780888
+
+EVENT time: 44.898346,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 44.898346
+
+EVENT time: 46.017822,  type: 1, fromlayer5  entity: 0
+          START TIMER: starting timer at 46.017822
+Sending packet 0 to layer 3
+
+EVENT time: 46.552155,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 52.266842,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+
+EVENT time: 53.747475,  type: 2, fromlayer3  entity: 0
+          STOP TIMER: stopping timer at 53.747475
+ Simulator terminated at time 53.747475
+ after attempting to send 15 msgs from layer5
+number of messages dropped due to full window:  0 
+number of valid (not corrupt or duplicate) acknowledgements received at A:  0 
+(note: a single acknowledgement may have acknowledged more than one packet - if cumulative acknowledgements are used)
+number of packet resends by A:  0 
+number of correct packets received at B:  0 
+number of messages delivered to application:  3 
+
+----------------------------
+differences
+sr.c: In function ‘A_output’:
+sr.c:78:5: warning: implicit declaration of function ‘memcpy’ [-Wimplicit-function-declaration]
+     memcpy(waiting_packet.payload, message.data, sizeof(message.data));
+     ^
+sr.c:78:5: warning: incompatible implicit declaration of built-in function ‘memcpy’ [enabled by default]
+sr.c: In function ‘B_input’:
+sr.c:145:9: warning: ISO C90 forbids mixed declarations and code [-Wpedantic]
+         struct msg message;
+         ^
+sr.c:146:9: warning: incompatible implicit declaration of built-in function ‘memcpy’ [enabled by default]
+         memcpy(message.data, packet.payload, sizeof(packet.payload));
+         ^
+sr.c:155:5: warning: ISO C90 forbids mixed declarations and code [-Wpedantic]
+     struct pkt ackpkt;
+     ^
+sr.c: At top level:
+sr.c:63:19: warning: ‘buffer’ defined but not used [-Wunused-variable]
+ static struct pkt buffer[WINDOWSIZE];  /* array for storing packets waiting for ACK */
+                   ^
+sr.c:64:12: warning: ‘windowfirst’ defined but not used [-Wunused-variable]
+ static int windowfirst, windowlast;    /* array indexes of the first/last packet awaiting ACK */
+            ^
+sr.c:64:25: warning: ‘windowlast’ defined but not used [-Wunused-variable]
+ static int windowfirst, windowlast;    /* array indexes of the first/last packet awaiting ACK */
+                         ^
+sr.c:65:12: warning: ‘windowcount’ defined but not used [-Wunused-variable]
+ static int windowcount;                /* the number of packets currently awaiting an ACK */
+            ^
+sr.c:129:12: warning: ‘B_nextseqnum’ defined but not used [-Wunused-variable]
+ static int B_nextseqnum;   /* the sequence number for the next packets sent by B */
+            ^
+Further testing is not possible until these errors are
+corrected.
+Tests completed successfully, finishing up
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+marks:
+total_marks: 0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+****************************************************************************************************************** 
+Web Submission Script Complete.

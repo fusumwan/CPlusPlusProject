@@ -1,0 +1,105 @@
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:If you want loss or corruption to only occur in one direction, choose the direction: 0 A->B, 1 A<-B, 2 A<->B (both directions) :Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 1.870574,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 0 to layer 3
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 1.870574
+
+EVENT time: 3.512484,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 1 to layer 3
+          TOLAYER3: packet being corrupted
+
+EVENT time: 4.452843,  type: 1, fromlayer5  entity: 0
+----A: New message arrives, send window is not full, send new messge to layer3!
+Sending packet 2 to layer 3
+          TOLAYER3: packet being corrupted
+
+EVENT time: 5.324238,  type: 1, fromlayer5  entity: 0
+
+EVENT time: 7.335669,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 15.971805,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 16.870575,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 0
+          START TIMER: starting timer at 16.870575
+
+EVENT time: 20.439072,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 25.302477,  type: 2, fromlayer3  entity: 1
+----B: packet 0 is correctly received, send ACK!
+
+EVENT time: 31.600891,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 0 is received
+----A: ACK 0 is not a duplicate
+          STOP TIMER: stopping timer at 31.600891
+          START TIMER: starting timer at 31.600891
+
+EVENT time: 46.600891,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 1
+          START TIMER: starting timer at 46.600891
+
+EVENT time: 52.630543,  type: 2, fromlayer3  entity: 1
+----B: packet 1 is correctly received, send ACK!
+
+EVENT time: 60.285088,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 1 is received
+----A: ACK 1 is not a duplicate
+          STOP TIMER: stopping timer at 60.285088
+          START TIMER: starting timer at 60.285088
+
+EVENT time: 75.285088,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 2
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 75.285088
+
+EVENT time: 78.697990,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 90.285088,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 2
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 90.285088
+
+EVENT time: 100.121773,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 105.285088,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 2
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 105.285088
+
+EVENT time: 106.765717,  type: 2, fromlayer3  entity: 1
+
+EVENT time: 120.285088,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 2
+          START TIMER: starting timer at 120.285088
+
+EVENT time: 126.645790,  type: 2, fromlayer3  entity: 1
+----B: packet 2 is correctly received, send ACK!
+
+EVENT time: 135.285095,  type: 0, timerinterrupt   entity: 0
+----A: time out,resend packets!
+---A: resending packet 2
+          TOLAYER3: packet being corrupted
+          START TIMER: starting timer at 135.285095
+
+EVENT time: 136.473755,  type: 2, fromlayer3  entity: 0
+----A: uncorrupted ACK 2 is received
+----A: ACK 2 is not a duplicate
+          STOP TIMER: stopping timer at 136.473755
+
+EVENT time: 136.591476,  type: 2, fromlayer3  entity: 1
+ Simulator terminated at time 136.591476
+ after attempting to send 3 msgs from layer5
+number of messages dropped due to full window:  0 
+number of valid (not corrupt or duplicate) acknowledgements received at A:  3 
+(note: a single acknowledgement may have acknowledged more than one packet - if cumulative acknowledgements are used)
+number of packet resends by A:  7 
+number of correct packets received at B:  3 
+number of messages delivered to application:  3 
